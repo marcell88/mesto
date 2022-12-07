@@ -12,3 +12,18 @@
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
 @import url(../blocks/header/__line/header__line.css);
+
+/* Главная секция */
+@import url(../blocks/main/main.css);
+
+/* Профиль */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__about/profile__about.css);
+@import url(../blocks/profile/__add-button/profile__add-button.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__description/profile__decription.css);
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__edit-button/profile__edit-button.css);
+@import url(../blocks/profile/__text-cont/profile__text-cont.css);
+@import url(../blocks/profile/__add-pic/profile__add-pic.css);
+@import url(../blocks/profile/__edit-pic/profile__edit-pic.css);
