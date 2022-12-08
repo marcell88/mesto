@@ -27,3 +27,15 @@
 @import url(../blocks/profile/__text-cont/profile__text-cont.css);
 @import url(../blocks/profile/__add-pic/profile__add-pic.css);
 @import url(../blocks/profile/__edit-pic/profile__edit-pic.css);
+
+/* Галерея */
+@import url(../blocks/gallery/gallery.css);
+@import url(../blocks/gallery/__card/gallery__card.css);
+@import url(../blocks/gallery/__heart/gallery__heart.css);
+@import url(../blocks/gallery/__pic/gallery__pic.css);
+@import url(../blocks/gallery/__text-cont/gallery__text-cont.css);
+@import url(../blocks/gallery/__text/gallery__text.css);
+
+
+
+
