@@ -15,9 +15,9 @@
             <section class="popup">
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <img class="popup__close" src="./images/close.svg" alt="Закрыть">
-                <form method="post" class="popup__form">          
-                    <input class="popup__name" type="text" name="name" value="Жак-Ив Кусто">
-                    <input class="popup__job" type="text"  name="job" value="Исследователь океана">
+                <form class="popup__form">          
+                    <input class="popup__name" type="text" name="name">
+                    <input class="popup__job" type="text"  name="job">
                     <button class="popup__button">Сохранить</button>
                 </form>
             </section>
@@ -34,12 +34,12 @@
                     <div class="profile__description">
                         <img class="profile__avatar" src="./images/avatar.jpg" alt="Фото профиля">
                         <div class="profile__text-cont">
-                            <h1 class="profile__name">
-                                Жак-Ив Кусто
+                            <div class="profile__name-cont">
+                                <h1 class="profile__name">Жак-Ив Кусто</h1>
                                 <div class="profile__edit-button">
                                     <img class="profile__edit-pic" src="./images/edit.png" alt="Редактировать профиль">
                                 </div>    
-                            </h1>
+                            </div>
                             <p class="profile__about">Исследователь океана</p>
                         </div>
                     </div>
@@ -102,5 +102,6 @@
             </footer>
 
         </div>
+        <script src="./scripts/script.js"></script>
     </body>
 </html>
