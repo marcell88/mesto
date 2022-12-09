@@ -7,7 +7,6 @@
     transition: 0.2s opacity;
 
     background-image: url(../../../images/add.png);
-    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 22px 22px;
