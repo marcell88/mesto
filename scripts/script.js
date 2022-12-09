@@ -1,5 +1,4 @@
 let editButton = document.querySelector(".profile__edit-button");
-let page = document.querySelector(".page");
 let popup = document.querySelector(".popup");
 let form = document.querySelector(".popup__form");
 let closePopup = document.querySelector(".popup__close");
@@ -22,7 +21,6 @@ function handleFormSubmit (evt) {
     document.querySelector(".profile__name").textContent = name;
     document.querySelector(".profile__about").textContent = job;
 
-    page.classList.remove('page_overlayed');
     popup.classList.remove('popup_displayed');
 }
 
@@ -32,7 +30,6 @@ inputJob.value = document.querySelector(".profile__about").textContent.trim();
 
 //Слушаем - открытие формы
 editButton.addEventListener('click', () => {
-    page.classList.add('page_overlayed');
     popup.classList.add('popup_displayed');
 
     //Слушаем submit
@@ -40,9 +37,7 @@ editButton.addEventListener('click', () => {
 
     //Слушаем - закрытие формы
     closePopup.addEventListener('click', () => {
-        page.classList.remove('page_overlayed');
         popup.classList.remove('popup_displayed');
     });       
-
 
 });

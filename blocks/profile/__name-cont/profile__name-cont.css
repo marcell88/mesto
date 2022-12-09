@@ -5,3 +5,9 @@
     justify-content: flex-start;
     column-gap: 19px;
 }
+
+@media screen and (max-width: 600px) {
+    .profile__name-cont {
+        column-gap: 9px;
+    }
+}

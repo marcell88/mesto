@@ -5,9 +5,13 @@
     border: 2px solid #FFFFFF;
     border-radius: 2px;
     transition: 0.2s opacity;
-    background-color: transparent;
-    padding: 0;
-    display: flex;
+
+    background-image: url(../../../images/add.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px 22px;
+
 }
 
 .profile__add-button:hover {
@@ -18,5 +22,6 @@
 @media screen and (max-width: 600px) {
     .profile__add-button {
         width: 100%;
+        background-size: 15px 15px;
     }
 }
