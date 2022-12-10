@@ -12,17 +12,17 @@
         <div class="page">
 
             <!--Всплывающий попап-->
-            <section class="popup">
+            <div class="popup">
                 <div class="popup__containter">
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <img class="popup__close" src="./images/close.svg" alt="Закрыть">
-                    <form class="popup__form">          
-                        <input class="popup__name" type="text" name="name">
-                        <input class="popup__job" type="text"  name="job">
-                        <button class="popup__button">Сохранить</button>
+                    <button class="popup__close" type="button"></button>
+                    <form class="popup__form" name="popup-form">          
+                        <input class="popup__input popup__input_type_name" type="text" name="name">
+                        <input class="popup__input popup__input_type_job" type="text"  name="job">
+                        <button class="popup__button" type="submit">Сохранить</button>
                     </form>                  
                 </div>
-            </section>
+            </div>
 
             <!--Шапка сайта-->
             <header class="header">
@@ -38,12 +38,12 @@
                         <div class="profile__text-cont">
                             <div class="profile__name-cont">
                                 <h1 class="profile__name">Жак-Ив Кусто</h1>
-                                <div class="profile__edit-button"></div>    
+                                <button class="profile__edit-button" type="button"></button>    
                             </div>
                             <p class="profile__about">Исследователь океана</p>
                         </div>
                     </div>
-                    <div class="profile__add-button"></div>
+                    <button class="profile__add-button" type="button"></button>
                 </section>
 
                 <!--Галееря фотографий-->
@@ -52,42 +52,42 @@
                         <img src="./images/Karachaevsk-1-6.png" alt="Карачаевск" class="gallery__pic">
                         <div class="gallery__text-cont">
                             <h2 class="gallery__text">Карачаевск</h2>
-                            <img src="./images/heart.svg" alt="Лайк)" class="gallery__heart">                   
+                            <button class="gallery__heart" type="button"></button>
                         </div>
                     </div>
                     <div class="gallery__card">
-                        <img src="./images/Elbrus-2-4.png" alt="Карачаевск" class="gallery__pic">
+                        <img src="./images/Elbrus-2-4.png" alt="Эльбрус" class="gallery__pic">
                         <div class="gallery__text-cont">
                             <h2 class="gallery__text">Гора Эльбрус</h2>
-                            <img src="./images/heart.svg" alt="Лайк)" class="gallery__heart">                          
+                            <button class="gallery__heart" type="button"></button>                       
                         </div>
                     </div>
                     <div class="gallery__card">
-                        <img src="./images/Dombay-3-5.png" alt="Карачаевск" class="gallery__pic">
+                        <img src="./images/Dombay-3-5.png" alt="Домбай" class="gallery__pic">
                         <div class="gallery__text-cont">
                             <h2 class="gallery__text">Домбай</h2>
-                            <img src="./images/heart.svg" alt="Лайк)" class="gallery__heart">                          
+                            <button class="gallery__heart" type="button"></button>                       
                         </div>
                     </div>
                     <div class="gallery__card">
-                        <img src="./images/Elbrus-2-4.png" alt="Карачаевск" class="gallery__pic">
+                        <img src="./images/Elbrus-2-4.png" alt="Ельбрус" class="gallery__pic">
                         <div class="gallery__text-cont">
                             <h2 class="gallery__text">Гора Эльбрус</h2>
-                            <img src="./images/heart.svg" alt="Лайк)" class="gallery__heart">                          
+                            <button class="gallery__heart" type="button"></button>                       
                         </div>
                     </div>
                     <div class="gallery__card">
-                        <img src="./images/Dombay-3-5.png" alt="Карачаевск" class="gallery__pic">
+                        <img src="./images/Dombay-3-5.png" alt="Добмай" class="gallery__pic">
                         <div class="gallery__text-cont">
                             <h2 class="gallery__text">Домбай</h2>
-                            <img src="./images/heart.svg" alt="Лайк)" class="gallery__heart">                          
+                            <button class="gallery__heart" type="button"></button>                    
                         </div>
                     </div>
                     <div class="gallery__card">
                         <img src="./images/Karachaevsk-1-6.png" alt="Карачаевск" class="gallery__pic">
                         <div class="gallery__text-cont">
                             <h2 class="gallery__text">Карачаево-Черкессия</h2>
-                            <img src="./images/heart.svg" alt="Лайк)" class="gallery__heart">                          
+                            <button class="gallery__heart" type="button"></button>                       
                         </div>
                     </div>
                 </section>
@@ -96,10 +96,10 @@
 
             <!--Подвал сайта-->
             <footer class="footer">
-                <h2 class="footer__text">&#169; 2020 Mesto Russia</h2>
+                <p class="footer__text">&#169; 2020 Mesto Russia</p>
             </footer>
 
         </div>
-        <script src="./scripts/script.js"></script>
+        <script src="./scripts/index.js"></script>
     </body>
 </html>
