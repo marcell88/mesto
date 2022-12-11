@@ -2,7 +2,7 @@
 @import url(../vendor/normalize.css);
 
 /* Шрифты */
-@import url(../fonts/Inter\ Web/inter.css);
+@import url(../fonts/fonts.css);
 
 /* Общие стили и миксы */
 @import url(../blocks/body/body.css);
