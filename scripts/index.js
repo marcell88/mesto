@@ -112,7 +112,7 @@ const unlikeCard = (evt) => {
 
 //Залайкать карту
 const likeCard = (evt) => {
-    evt.target.style.backgroundImage = "url(../../../images/heart-active.svg)";
+    evt.target.style.backgroundImage = "url(../../../images/heartactive.svg)";
     evt.currentTarget.removeEventListener('click', likeCard);
     evt.currentTarget.addEventListener('click', unlikeCard);
 }
