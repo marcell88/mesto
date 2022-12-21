@@ -6,3 +6,7 @@
 
     object-fit: cover;
 }
+
+.gallery__pic:hover {
+    cursor: pointer;
+}

@@ -11,8 +11,8 @@
 
         <div class="page">
 
-            <!--Всплывающий попап-->
-            <div class="popup">
+            <!--Всплывающий попап EDIT-->
+            <div class="popup popup_type_edit">
                 <div class="popup__containter">
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <button class="popup__close" type="button"></button>
@@ -21,6 +21,28 @@
                         <input class="popup__input popup__input_type_job" type="text"  name="job">
                         <button class="popup__button" type="submit">Сохранить</button>
                     </form>                  
+                </div>
+            </div>
+
+            <!--Всплывающий попап ADD-->
+            <div class="popup popup_type_add">
+                <div class="popup__containter">
+                    <h2 class="popup__title">Новое место</h2>
+                    <button class="popup__close" type="button"></button>
+                    <form class="popup__form" name="popup-form">          
+                        <input class="popup__input popup__input_type_pic-name" type="text" name="pic-name" placeholder="Название">
+                        <input class="popup__input popup__input_type_pic-link" type="text"  name="pic-link" placeholder="Ссылка на картинку">
+                        <button class="popup__button" type="submit">Создать</button>
+                    </form>                  
+                </div>
+            </div>
+
+            <!--Всплывающий попап PIC-->
+            <div class="popup popup_type_pic">
+                <div class="popup__containter-pic">
+                    <img src="" alt="" class="popup__pic">
+                    <h2 class="popup__text"></h2>
+                    <button class="popup__close" type="button"></button>
                 </div>
             </div>
 
@@ -48,48 +70,16 @@
 
                 <!--Галееря фотографий-->
                 <section class="gallery">
-                    <div class="gallery__card">
-                        <img src="./images/Karachaevsk-1-6.png" alt="Карачаевск" class="gallery__pic">
-                        <div class="gallery__text-cont">
-                            <h2 class="gallery__text">Карачаевск</h2>
-                            <button class="gallery__heart" type="button"></button>
-                        </div>
-                    </div>
-                    <div class="gallery__card">
-                        <img src="./images/Elbrus-2-4.png" alt="Эльбрус" class="gallery__pic">
-                        <div class="gallery__text-cont">
-                            <h2 class="gallery__text">Гора Эльбрус</h2>
-                            <button class="gallery__heart" type="button"></button>                       
-                        </div>
-                    </div>
-                    <div class="gallery__card">
-                        <img src="./images/Dombay-3-5.png" alt="Домбай" class="gallery__pic">
-                        <div class="gallery__text-cont">
-                            <h2 class="gallery__text">Домбай</h2>
-                            <button class="gallery__heart" type="button"></button>                       
-                        </div>
-                    </div>
-                    <div class="gallery__card">
-                        <img src="./images/Elbrus-2-4.png" alt="Ельбрус" class="gallery__pic">
-                        <div class="gallery__text-cont">
-                            <h2 class="gallery__text">Гора Эльбрус</h2>
-                            <button class="gallery__heart" type="button"></button>                       
-                        </div>
-                    </div>
-                    <div class="gallery__card">
-                        <img src="./images/Dombay-3-5.png" alt="Добмай" class="gallery__pic">
-                        <div class="gallery__text-cont">
-                            <h2 class="gallery__text">Домбай</h2>
-                            <button class="gallery__heart" type="button"></button>                    
-                        </div>
-                    </div>
-                    <div class="gallery__card">
-                        <img src="./images/Karachaevsk-1-6.png" alt="Карачаевск" class="gallery__pic">
-                        <div class="gallery__text-cont">
-                            <h2 class="gallery__text">Карачаево-Черкессия</h2>
-                            <button class="gallery__heart" type="button"></button>                       
-                        </div>
-                    </div>
+                    <template class="gallery__template">
+                        <div class="gallery__card">
+                            <img src="" alt="" class="gallery__pic">
+                            <div class="gallery__text-cont">
+                                <h2 class="gallery__text"></h2>
+                                <button class="gallery__heart" type="button"></button>
+                            </div>
+                            <button class="gallery__delete" type="button"></button>
+                        </div>   
+                    </template>
                 </section>
 
             </main>

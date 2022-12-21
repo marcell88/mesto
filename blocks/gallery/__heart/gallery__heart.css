@@ -1,13 +1,13 @@
 .gallery__heart {
-    width: 22px;
-    height: 19px;
+    width: 23px;
+    height: 20px;
     padding: 0;
     margin: 0 20px 0 0;
     transition: 0.2s opacity;
     border: none;
     background-color: transparent;
     background-image: url(../../../images/heart.svg);
-    background-size: contain;
+    background-size: 22px 19px;
     background-repeat: no-repeat;
     background-position: center;
 }
