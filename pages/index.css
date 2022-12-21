@@ -50,6 +50,7 @@
 @import url(../blocks/gallery/gallery.css);
 @import url(../blocks/gallery/__card/gallery__card.css);
 @import url(../blocks/gallery/__heart/gallery__heart.css);
+@import url(../blocks/gallery/__heart/_active/gallery__heart\ _active.css);
 @import url(../blocks/gallery/__pic/gallery__pic.css);
 @import url(../blocks/gallery/__text-cont/gallery__text-cont.css);
 @import url(../blocks/gallery/__text/gallery__text.css);
