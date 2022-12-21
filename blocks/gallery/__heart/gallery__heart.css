@@ -6,7 +6,7 @@
     transition: 0.2s opacity;
     border: none;
     background-color: transparent;
-    background-image: url(../../../images/heart.png);
+    background-image: url(../../../images/heart.svg);
     background-size: 22px 19px;
     background-repeat: no-repeat;
     background-position: center;
