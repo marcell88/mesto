@@ -117,7 +117,6 @@ const likeCard = (evt) => {
     evt.currentTarget.addEventListener('click', unlikeCard);
 }
 
-
 const fullsizeCard = (evt) => {
     popupOpened(popupPic);
 
