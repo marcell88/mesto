@@ -105,14 +105,14 @@ const removeCard = (evt) => {
 
 //Убрать лайк
 const unlikeCard = (evt) => {
-    evt.target.style.backgroundImage = "url(../../../images/heart.svg)";
+    evt.target.style.backgroundImage = "url(../../../images/heart.png)";
     evt.currentTarget.removeEventListener('click', unlikeCard);
     evt.currentTarget.addEventListener('click', likeCard);
 }
 
 //Залайкать карту
 const likeCard = (evt) => {
-    evt.target.style.backgroundImage = "url(../../../images/heartactive.svg)";
+    evt.target.style.backgroundImage = "url(../../../images/heartactive.png)";
     evt.currentTarget.removeEventListener('click', likeCard);
     evt.currentTarget.addEventListener('click', unlikeCard);
 }
