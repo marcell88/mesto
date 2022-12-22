@@ -16,9 +16,9 @@
                 <div class="popup__containter">
                     <h2 class="popup__title">Редактировать профиль</h2>
                     <button class="popup__close" type="button"></button>
-                    <form class="popup__form" name="popup-form">          
-                        <input class="popup__input popup__input_type_name" type="text" name="name">
-                        <input class="popup__input popup__input_type_job" type="text"  name="job">
+                    <form class="popup__form" name="profile-form">          
+                        <input class="popup__input popup__input_type_name" type="text" name="name" placeholder="Ваше имя">
+                        <input class="popup__input popup__input_type_job" type="text"  name="job" placeholder="Расскажите о себе">
                         <button class="popup__button" type="submit">Сохранить</button>
                     </form>                  
                 </div>
@@ -29,7 +29,7 @@
                 <div class="popup__containter">
                     <h2 class="popup__title">Новое место</h2>
                     <button class="popup__close" type="button"></button>
-                    <form class="popup__form" name="popup-form">          
+                    <form class="popup__form" name="new-card-form">          
                         <input class="popup__input popup__input_type_pic-name" type="text" name="pic-name" placeholder="Название">
                         <input class="popup__input popup__input_type_pic-link" type="text"  name="pic-link" placeholder="Ссылка на картинку">
                         <button class="popup__button" type="submit">Создать</button>
@@ -90,6 +90,7 @@
             </footer>
 
         </div>
+        <script src="./scripts/out-of-the-box-cards.js"></script>
         <script src="./scripts/index.js"></script>
     </body>
 </html>

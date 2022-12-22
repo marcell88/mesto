@@ -1,32 +1,4 @@
-//=======OUT-OF-BOX CARDS=======
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ]; 
-
-//=======ПЕРЕМЕННЫЕ=======
+//=======ПЕРЕМЕННЫЕ=============
 
 //Элементы на странице
 const popupEdit = document.querySelector(".popup_type_edit");
@@ -36,6 +8,9 @@ const popupPic = document.querySelector(".popup_type_pic");
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 const gallery = document.querySelector(".gallery");
+
+const picSpreaded = popupPic.querySelector(".popup__pic");
+const textToSpreadedPic = popupPic.querySelector(".popup__text");
 
 const galleryTemplate = document.querySelector(".gallery__template").content;
 
@@ -50,57 +25,57 @@ const inputPicName = formPic.querySelector(".popup__input_type_pic-name");
 const inputPicLink = formPic.querySelector(".popup__input_type_pic-link");
 
 //Кнопки
-const editButton = document.querySelector(".profile__edit-button");
-const addButton = document.querySelector(".profile__add-button");
-const closeEditPopup = popupEdit.querySelector(".popup__close");
-const closeAddPopup = popupAdd.querySelector(".popup__close");
-const closePicPopup = popupPic.querySelector(".popup__close");
+const buttonOpenEditPopup = document.querySelector(".profile__edit-button");
+const buttonOpenNewCardPopup = document.querySelector(".profile__add-button");
+const buttonCloseEditPopup = popupEdit.querySelector(".popup__close");
+const buttonCloseAddPopup = popupAdd.querySelector(".popup__close");
+const buttonClosePicPopup = popupPic.querySelector(".popup__close");
 
 
 //=======ФУНКЦИИ=======
 
 //Открытие попапа
-const popupOpened = (popupType) => {
+const openPopup = (popupType) => {
     popupType.classList.add('popup_opened');
+}
+
+//Закрытие попапа
+const closePopup = (popupType) => {
+    popupType.classList.remove('popup_opened');
+}
+
+//Открытие попапа для редактирования профиля
+const openEditPopup = () => {
+    openPopup(popupEdit);
 
     //Копируем изначальное описание в форму
     inputName.value = profileName.textContent.trim();
     inputJob.value = profileAbout.textContent.trim();
 }
 
-//Закрытие попапа
-const popupClosed = (popupType) => {
-    popupType.classList.remove('popup_opened');
-}
-
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
-const profileFormSubmit = (evt) => {
+const handleProfileForm = (evt) => {
     const popupType = evt.target.closest(".popup");
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    let name = inputName.value;
-    let job = inputJob.value;
-    profileName.textContent = name;
-    profileAbout.textContent = job;
-    popupClosed(popupType);
+    profileName.textContent = inputName.value;
+    profileAbout.textContent = inputJob.value;
+    closePopup(popupType);
 }
 
-const picFormSubmit = (evt) => {
+const handleNewCardForm = (evt) => {
     const popupType = evt.target.closest(".popup");
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    let picName = inputPicName.value;
-    let picLink = inputPicLink.value;
-    if (picName !== "" && picLink !== "") {
-        let newCard ={name: picName, link: picLink}
-        postCard(addCard(newCard), true);
+    if (inputPicName.value !== "" && inputPicLink.value !== "") {
+        const cardToAdd = {name: inputPicName.value, link: inputPicLink.value};
+        renderCard(gallery, createCard(cardToAdd), true);
     }
-    popupClosed(popupType);
+    closePopup(popupType);
     evt.currentTarget.reset();
 }
 
 //Удалить карту
 const removeCard = (evt) => {
-    const cardToRemove = evt.target.closest(".gallery__card");
-    cardToRemove.remove();
+    evt.target.closest(".gallery__card").remove();
 }
 
 //Залайкать карту
@@ -108,78 +83,65 @@ const likeCard = (evt) => {
     evt.target.classList.toggle("gallery__heart_active");
 }
 
-const fullsizeCard = (evt) => {
-    popupOpened(popupPic);
+const spreadCard = (evt) => {
+    openPopup(popupPic);
 
-    const picFullScreen = popupPic.querySelector(".popup__pic");
-    const textToPic = popupPic.querySelector(".popup__text");
     const link = evt.target.closest(".gallery__card").querySelector(".gallery__pic").getAttribute("src");
     const name = evt.target.closest(".gallery__card").querySelector(".gallery__text").textContent;
 
-    picFullScreen.setAttribute("alt", name);
-    picFullScreen.setAttribute("src", link);
-    textToPic.textContent = name;
+    picSpreaded.setAttribute("alt", name);
+    picSpreaded.setAttribute("src", link);
+    textToSpreadedPic.textContent = name;
 }
 
 //Добавить карту на сайт
-const addCard = (img) => {
+const createCard = (img) => {
     
     //Клонируем
     const galleryCard = galleryTemplate.querySelector(".gallery__card").cloneNode(true);
     const galleryPic = galleryCard.querySelector(".gallery__pic");
     const galleryText = galleryCard.querySelector(".gallery__text");
+    const galleryHeart = galleryCard.querySelector(".gallery__heart");
+    const galleryDelete = galleryCard.querySelector(".gallery__delete");
 
     //Наполняем
     galleryPic.setAttribute("alt", img.name);
     galleryPic.setAttribute("src", img.link);
     galleryText.textContent = img.name;
 
-    return galleryCard;
-}
-
-
-const postCard = (cardObject, place = false) => {
-
-    //Клонируем
-    const galleryCard = cardObject;
-    const galleryPic = galleryCard.querySelector(".gallery__pic");
-    const galleryTextCont = galleryCard.querySelector(".gallery__text-cont");
-    const galleryText = galleryCard.querySelector(".gallery__text");
-    const galleryHeart = galleryCard.querySelector(".gallery__heart");
-    const galleryDelete = galleryCard.querySelector(".gallery__delete");
-
-    //Размещаем
-    if (place) {
-        gallery.prepend(galleryCard);
-        galleryCard.prepend(galleryPic, galleryTextCont, galleryDelete);
-        galleryTextCont.prepend(galleryText, galleryHeart);
-    } else {
-        gallery.append(galleryCard);
-        galleryCard.append(galleryPic, galleryTextCont, galleryDelete);
-        galleryTextCont.append(galleryText, galleryHeart);
-    }
-    
     //Вешаем слушателей
     galleryDelete.addEventListener('click', removeCard);
     galleryHeart.addEventListener('click', likeCard);
-    galleryPic.addEventListener('click', fullsizeCard);
+    galleryPic.addEventListener('click', spreadCard);
+
+    return galleryCard;
+}
+
+//true - prepend, false - append
+const renderCard = (container, cardObject, place = false) => {
+    //Размещаем
+    if (place) {
+      container.prepend(cardObject);
+    } else {
+      container.append(cardObject);
+    }
 } 
 
 
 //=======СКРИПТ=======
 
 //Задаем начальные карты
-initialCards.forEach( item => postCard(addCard(item), false) );
+initialCards.forEach( item => renderCard(gallery, createCard(item), false) );
 
 //Слушаем события - открытие, закрытие, сабмит
-editButton.addEventListener('click', () => {popupOpened(popupEdit)});
-addButton.addEventListener('click', () => {popupOpened(popupAdd)});
+buttonOpenEditPopup.addEventListener('click', openEditPopup);
+buttonOpenNewCardPopup.addEventListener('click', () => {openPopup(popupAdd)});
 
-closeEditPopup.addEventListener('click', () => {popupClosed(popupEdit)});
-closeAddPopup.addEventListener('click', () => {popupClosed(popupAdd)});
-closePicPopup.addEventListener('click', () => {popupClosed(popupPic)});
+buttonCloseEditPopup.addEventListener('click', () => {closePopup(popupEdit)});
+buttonCloseAddPopup.addEventListener('click', () => {closePopup(popupAdd)});
+buttonClosePicPopup.addEventListener('click', () => {closePopup(popupPic)});
 
-formProfile.addEventListener('submit', profileFormSubmit);
-formPic.addEventListener('submit', picFormSubmit);
+formProfile.addEventListener('submit', handleProfileForm);
+formPic.addEventListener('submit', handleNewCardForm);
 
 
