@@ -1,6 +1,7 @@
 //=======ПЕРЕМЕННЫЕ=============
 
 //Элементы на странице
+const popup = document.querySelector(".popup")
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupAdd = document.querySelector(".popup_type_add");
 const popupPic = document.querySelector(".popup_type_pic");
@@ -60,6 +61,15 @@ const openEditPopup = () => {
     });
     toggleButtonState(inputList, formProfile.querySelector('.popup__button'), objectOfSettings);    
 
+    //Слушатель на закрытие по ESC
+    document.addEventListener('keydown', handleEscapePress);
+
+    //Слушатель на клик мимо формы
+    popupEdit.addEventListener('click', (evt) => {
+        if (evt.target === evt.currentTarget) {
+            closePopup(popupEdit)
+        }
+    });
 }
 
 //Открытие попапа для добавления карточки
@@ -73,6 +83,25 @@ const openAddPopup = () => {
     });
     toggleButtonState(inputList, formPic.querySelector('.popup__button'), objectOfSettings);
 
+    //Слушатель на закрытие по ESC
+    document.addEventListener('keydown', handleEscapePress);
+
+    //Слушатель на клик мимо формы
+    popupAdd.addEventListener('click', (evt) => {
+        if (evt.target === evt.currentTarget) {
+            closePopup(popupAdd)
+        }
+    });
+
+}
+
+const handleEscapePress = (evt) => {
+    if (evt.key === 'Escape') {
+        closePopup(popupEdit);
+        closePopup(popupAdd);
+        closePopup(popupPic);
+        document.removeEventListener('keydown', handleEscapePress);
+    }
 }
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
@@ -114,6 +143,16 @@ const spreadCard = (evt) => {
     picSpreaded.setAttribute("alt", name);
     picSpreaded.setAttribute("src", link);
     textToSpreadedPic.textContent = name;
+
+    //Слушатель на закрытие по ESC
+    document.addEventListener('keydown', handleEscapePress);
+
+    //Слушатель на клик мимо формы
+    popupPic.addEventListener('click', (evt) => {
+        if (evt.target === evt.currentTarget) {
+            closePopup(popupPic)
+        }
+    });
 }
 
 //Добавить карту на сайт
