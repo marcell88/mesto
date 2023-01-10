@@ -51,6 +51,30 @@ const openEditPopup = () => {
     //Копируем изначальное описание в форму
     inputName.value = profileName.textContent.trim();
     inputJob.value = profileAbout.textContent.trim();
+
+    //Проверяем валидность формы при открытии
+    //Так как мы вносим значения по умолчанию, а ошибки могут наследоваться
+    const inputList = Array.from(formProfile.querySelectorAll('.popup__input'));
+    inputList.forEach( (input) => {
+        isValid(formProfile, input, objectOfSettings);
+    });
+
+    toggleButtonState(inputList, formProfile.querySelector('.popup__button'), objectOfSettings);
+
+}
+
+//Открытие попапа для добавления карточки
+const openAddPopup = () => {
+    openPopup(popupAdd);
+    
+    //Проверяем валидность при открытии
+    const inputList = Array.from(formPic.querySelectorAll('.popup__input'));
+    inputList.forEach( (input) => {
+        isValid(formPic, input, objectOfSettings);
+    });
+
+    toggleButtonState(inputList, formPic.querySelector('.popup__button'), objectOfSettings);
+
 }
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
@@ -135,7 +159,7 @@ initialCards.forEach( item => renderCard(gallery, createCard(item), false) );
 
 //Слушаем события - открытие, закрытие, сабмит
 buttonOpenEditPopup.addEventListener('click', openEditPopup);
-buttonOpenNewCardPopup.addEventListener('click', () => {openPopup(popupAdd)});
+buttonOpenNewCardPopup.addEventListener('click', openAddPopup);
 
 buttonCloseEditPopup.addEventListener('click', () => {closePopup(popupEdit)});
 buttonCloseAddPopup.addEventListener('click', () => {closePopup(popupAdd)});
