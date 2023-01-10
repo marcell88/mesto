@@ -58,8 +58,7 @@ const openEditPopup = () => {
     inputList.forEach( (input) => {
         isValid(formProfile, input, objectOfSettings);
     });
-
-    toggleButtonState(inputList, formProfile.querySelector('.popup__button'), objectOfSettings);
+    toggleButtonState(inputList, formProfile.querySelector('.popup__button'), objectOfSettings);    
 
 }
 
@@ -72,7 +71,6 @@ const openAddPopup = () => {
     inputList.forEach( (input) => {
         isValid(formPic, input, objectOfSettings);
     });
-
     toggleButtonState(inputList, formPic.querySelector('.popup__button'), objectOfSettings);
 
 }
