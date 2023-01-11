@@ -32,17 +32,24 @@ const buttonCloseEditPopup = popupEdit.querySelector(".popup__close");
 const buttonCloseAddPopup = popupAdd.querySelector(".popup__close");
 const buttonClosePicPopup = popupPic.querySelector(".popup__close");
 
+//Переменная в которую записываем текущий открытый попап (или null)
+let popupCurrent = null;
 
 //=======ФУНКЦИИ=======
 
 //Открытие попапа
 const openPopup = (popupType) => {
     popupType.classList.add('popup_opened');
+    popupCurrent = popupType;
 }
 
 //Закрытие попапа
 const closePopup = (popupType) => {
     popupType.classList.remove('popup_opened');
+    document.removeEventListener('keydown', handleEscapePress);
+    popupType.removeEventListener('click', handleSideClick);
+
+    popupCurrent = null;
 }
 
 //Открытие попапа для редактирования профиля
@@ -65,11 +72,8 @@ const openEditPopup = () => {
     document.addEventListener('keydown', handleEscapePress);
 
     //Слушатель на клик мимо формы
-    popupEdit.addEventListener('click', (evt) => {
-        if (evt.target === evt.currentTarget) {
-            closePopup(popupEdit)
-        }
-    });
+    popupEdit.addEventListener('click', handleSideClick);
+
 }
 
 //Открытие попапа для добавления карточки
@@ -78,29 +82,25 @@ const openAddPopup = () => {
     
     //Проверяем валидность при открытии
     const inputList = Array.from(formPic.querySelectorAll('.popup__input'));
-    inputList.forEach( (input) => {
-        isValid(formPic, input, objectOfSettings);
-    });
     toggleButtonState(inputList, formPic.querySelector('.popup__button'), objectOfSettings);
 
     //Слушатель на закрытие по ESC
     document.addEventListener('keydown', handleEscapePress);
 
     //Слушатель на клик мимо формы
-    popupAdd.addEventListener('click', (evt) => {
-        if (evt.target === evt.currentTarget) {
-            closePopup(popupAdd)
-        }
-    });
+    popupAdd.addEventListener('click', handleSideClick);
 
 }
 
 const handleEscapePress = (evt) => {
     if (evt.key === 'Escape') {
-        closePopup(popupEdit);
-        closePopup(popupAdd);
-        closePopup(popupPic);
-        document.removeEventListener('keydown', handleEscapePress);
+        closePopup(popupCurrent);
+    }
+}
+
+const handleSideClick = (evt) => {
+    if (evt.target === evt.currentTarget) {
+        closePopup(evt.currentTarget);
     }
 }
 
@@ -148,11 +148,7 @@ const spreadCard = (evt) => {
     document.addEventListener('keydown', handleEscapePress);
 
     //Слушатель на клик мимо формы
-    popupPic.addEventListener('click', (evt) => {
-        if (evt.target === evt.currentTarget) {
-            closePopup(popupPic)
-        }
-    });
+    popupPic.addEventListener('click', handleSideClick);
 }
 
 //Добавить карту на сайт
@@ -204,5 +200,4 @@ buttonClosePicPopup.addEventListener('click', () => {closePopup(popupPic)});
 
 formProfile.addEventListener('submit', handleProfileForm);
 formPic.addEventListener('submit', handleNewCardForm);
-
 
