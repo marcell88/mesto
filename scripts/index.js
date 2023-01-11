@@ -117,15 +117,11 @@ const likeCard = (evt) => {
     evt.target.classList.toggle('gallery__heart_active');
 }
 
-const spreadCard = (pic) => {
+const spreadCard = (img) => {
     openPopup(popupPic);
-
-    const link = pic.getAttribute('src');
-    const name = pic.textContent;
-
-    picSpreaded.setAttribute('alt', name);
-    picSpreaded.setAttribute('src', link);
-    textToSpreadedPic.textContent = name;
+    picSpreaded.setAttribute('alt', img.name);
+    picSpreaded.setAttribute('src', img.link);
+    textToSpreadedPic.textContent = img.name;
 }
 
 //Добавить карту на сайт
@@ -146,7 +142,7 @@ const createCard = (img) => {
     //Вешаем слушателей
     galleryDelete.addEventListener('click', removeCard);
     galleryHeart.addEventListener('click', likeCard);
-    galleryPic.addEventListener('click', () => { spreadCard(galleryPic) });
+    galleryPic.addEventListener('click', () => { spreadCard(img) });
 
     return galleryCard;
 }
