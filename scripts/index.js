@@ -16,7 +16,12 @@ const galleryTemplate = document.querySelector('.gallery__template').content;
 
 //Формы
 const formProfile = popupEdit.querySelector('.popup__form');
+const inputsProfileForm = formProfile.querySelectorAll('.popup__input');
+const buttonSubmitProfile = formProfile.querySelector('.popup__button');
+
 const formPic = popupAdd.querySelector('.popup__form');
+const inputsNewCardForm = formPic.querySelectorAll('.popup__input');
+const buttonSubmitNewCard = formPic.querySelector('.popup__button');
 
 const inputName = formProfile.querySelector('.popup__input_type_name');
 const inputJob = formProfile.querySelector('.popup__input_type_job');
@@ -31,15 +36,13 @@ const buttonCloseEditPopup = popupEdit.querySelector('.popup__close');
 const buttonCloseAddPopup = popupAdd.querySelector('.popup__close');
 const buttonClosePicPopup = popupPic.querySelector('.popup__close');
 
-//Переменная в которую записываем текущий открытый попап (или null)
-let popupCurrent = null;
-
 //=======ФУНКЦИИ=======
 
 //Открытие попапа
 const openPopup = (popupType) => {
     popupType.classList.add('popup_opened');
-    popupCurrent = popupType;
+    document.addEventListener('keydown', handleEscapePress);
+    popupType.addEventListener('click', handleSideClick);
 }
 
 //Закрытие попапа
@@ -47,8 +50,6 @@ const closePopup = (popupType) => {
     popupType.classList.remove('popup_opened');
     document.removeEventListener('keydown', handleEscapePress);
     popupType.removeEventListener('click', handleSideClick);
-
-    popupCurrent = null;
 }
 
 //Открытие попапа для редактирования профиля
@@ -61,18 +62,10 @@ const openEditPopup = () => {
 
     //Проверяем валидность формы при открытии
     //Так как мы вносим значения по умолчанию, а ошибки могут наследоваться
-    const inputList = Array.from(formProfile.querySelectorAll('.popup__input'));
-    inputList.forEach( (input) => {
-        isValid(formProfile, input, objectOfSettings);
+    Array.from(inputsProfileForm).forEach( (input) => {
+        checkValidity(formProfile, input, objectOfSettings);
     });
-    toggleButtonState(inputList, formProfile.querySelector('.popup__button'), objectOfSettings);    
-
-    //Слушатель на закрытие по ESC
-    document.addEventListener('keydown', handleEscapePress);
-
-    //Слушатель на клик мимо формы
-    popupEdit.addEventListener('click', handleSideClick);
-
+    toggleButtonState(inputsProfileForm, buttonSubmitProfile, objectOfSettings);    
 }
 
 //Открытие попапа для добавления карточки
@@ -80,20 +73,13 @@ const openAddPopup = () => {
     openPopup(popupAdd);
     
     //Проверяем валидность при открытии
-    const inputList = Array.from(formPic.querySelectorAll('.popup__input'));
-    toggleButtonState(inputList, formPic.querySelector('.popup__button'), objectOfSettings);
-
-    //Слушатель на закрытие по ESC
-    document.addEventListener('keydown', handleEscapePress);
-
-    //Слушатель на клик мимо формы
-    popupAdd.addEventListener('click', handleSideClick);
-
+    toggleButtonState(inputsNewCardForm, buttonSubmitNewCard, objectOfSettings);
 }
 
 const handleEscapePress = (evt) => {
     if (evt.key === 'Escape') {
-        closePopup(popupCurrent);
+        const popupType = document.querySelector('.popup_opened');
+        closePopup(popupType);
     }
 }
 
@@ -105,21 +91,19 @@ const handleSideClick = (evt) => {
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 const handleProfileForm = (evt) => {
-    const popupType = evt.target.closest('.popup');
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     profileName.textContent = inputName.value;
     profileAbout.textContent = inputJob.value;
-    closePopup(popupType);
+    closePopup(popupEdit);
 }
 
 const handleNewCardForm = (evt) => {
-    const popupType = evt.target.closest('.popup');
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     if (inputPicName.value !== '' && inputPicLink.value !== '') {
         const cardToAdd = {name: inputPicName.value, link: inputPicLink.value};
         renderCard(gallery, createCard(cardToAdd), true);
     }
-    closePopup(popupType);
+    closePopup(popupAdd);
     evt.currentTarget.reset();
 }
 
@@ -133,21 +117,15 @@ const likeCard = (evt) => {
     evt.target.classList.toggle('gallery__heart_active');
 }
 
-const spreadCard = (evt) => {
+const spreadCard = (pic) => {
     openPopup(popupPic);
 
-    const link = evt.target.closest('.gallery__card').querySelector('.gallery__pic').getAttribute('src');
-    const name = evt.target.closest('.gallery__card').querySelector('.gallery__text').textContent;
+    const link = pic.getAttribute('src');
+    const name = pic.textContent;
 
     picSpreaded.setAttribute('alt', name);
     picSpreaded.setAttribute('src', link);
     textToSpreadedPic.textContent = name;
-
-    //Слушатель на закрытие по ESC
-    document.addEventListener('keydown', handleEscapePress);
-
-    //Слушатель на клик мимо формы
-    popupPic.addEventListener('click', handleSideClick);
 }
 
 //Добавить карту на сайт
@@ -168,7 +146,7 @@ const createCard = (img) => {
     //Вешаем слушателей
     galleryDelete.addEventListener('click', removeCard);
     galleryHeart.addEventListener('click', likeCard);
-    galleryPic.addEventListener('click', spreadCard);
+    galleryPic.addEventListener('click', () => { spreadCard(galleryPic) });
 
     return galleryCard;
 }

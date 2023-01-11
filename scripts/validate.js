@@ -15,13 +15,15 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, buttonElement, obj) => {
     if (hasInvalidInput(inputList)) {
         buttonElement.classList.add(obj.inactiveButtonClass);
+        buttonElement.setAttribute('disabled', true);
     } else {
         buttonElement.classList.remove(obj.inactiveButtonClass);
+        buttonElement.removeAttribute('disabled');
     }
 }
 
 //Функция проверки валидности
-const isValid = (form, input, obj) => {
+const checkValidity = (form, input, obj) => {
     
     if (!input.validity.valid) {
         //если ошибка
@@ -44,7 +46,7 @@ const setEventListener = (form, obj) => {
     const inputList = Array.from(form.querySelectorAll(obj.inputSelector));
     inputList.forEach (input => {
         input.addEventListener('input', () => {
-            isValid(form, input, obj);
+            checkValidity(form, input, obj);
         });
     });
 }
