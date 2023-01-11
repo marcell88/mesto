@@ -1,36 +1,35 @@
 //=======ПЕРЕМЕННЫЕ=============
 
 //Элементы на странице
-const popup = document.querySelector(".popup")
-const popupEdit = document.querySelector(".popup_type_edit");
-const popupAdd = document.querySelector(".popup_type_add");
-const popupPic = document.querySelector(".popup_type_pic");
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAdd = document.querySelector('.popup_type_add');
+const popupPic = document.querySelector('.popup_type_pic');
 
-const profileName = document.querySelector(".profile__name");
-const profileAbout = document.querySelector(".profile__about");
-const gallery = document.querySelector(".gallery");
+const profileName = document.querySelector('.profile__name');
+const profileAbout = document.querySelector('.profile__about');
+const gallery = document.querySelector('.gallery');
 
-const picSpreaded = popupPic.querySelector(".popup__pic");
-const textToSpreadedPic = popupPic.querySelector(".popup__text");
+const picSpreaded = popupPic.querySelector('.popup__pic');
+const textToSpreadedPic = popupPic.querySelector('.popup__text');
 
-const galleryTemplate = document.querySelector(".gallery__template").content;
+const galleryTemplate = document.querySelector('.gallery__template').content;
 
 //Формы
-const formProfile = popupEdit.querySelector(".popup__form");
-const formPic = popupAdd.querySelector(".popup__form");
+const formProfile = popupEdit.querySelector('.popup__form');
+const formPic = popupAdd.querySelector('.popup__form');
 
-const inputName = formProfile.querySelector(".popup__input_type_name");
-const inputJob = formProfile.querySelector(".popup__input_type_job");
+const inputName = formProfile.querySelector('.popup__input_type_name');
+const inputJob = formProfile.querySelector('.popup__input_type_job');
 
-const inputPicName = formPic.querySelector(".popup__input_type_pic-name");
-const inputPicLink = formPic.querySelector(".popup__input_type_pic-link");
+const inputPicName = formPic.querySelector('.popup__input_type_pic-name');
+const inputPicLink = formPic.querySelector('.popup__input_type_pic-link');
 
 //Кнопки
-const buttonOpenEditPopup = document.querySelector(".profile__edit-button");
-const buttonOpenNewCardPopup = document.querySelector(".profile__add-button");
-const buttonCloseEditPopup = popupEdit.querySelector(".popup__close");
-const buttonCloseAddPopup = popupAdd.querySelector(".popup__close");
-const buttonClosePicPopup = popupPic.querySelector(".popup__close");
+const buttonOpenEditPopup = document.querySelector('.profile__edit-button');
+const buttonOpenNewCardPopup = document.querySelector('.profile__add-button');
+const buttonCloseEditPopup = popupEdit.querySelector('.popup__close');
+const buttonCloseAddPopup = popupAdd.querySelector('.popup__close');
+const buttonClosePicPopup = popupPic.querySelector('.popup__close');
 
 //Переменная в которую записываем текущий открытый попап (или null)
 let popupCurrent = null;
@@ -106,7 +105,7 @@ const handleSideClick = (evt) => {
 
 // Обработчик «отправки» формы, хотя пока она никуда отправляться не будет
 const handleProfileForm = (evt) => {
-    const popupType = evt.target.closest(".popup");
+    const popupType = evt.target.closest('.popup');
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
     profileName.textContent = inputName.value;
     profileAbout.textContent = inputJob.value;
@@ -114,9 +113,9 @@ const handleProfileForm = (evt) => {
 }
 
 const handleNewCardForm = (evt) => {
-    const popupType = evt.target.closest(".popup");
+    const popupType = evt.target.closest('.popup');
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    if (inputPicName.value !== "" && inputPicLink.value !== "") {
+    if (inputPicName.value !== '' && inputPicLink.value !== '') {
         const cardToAdd = {name: inputPicName.value, link: inputPicLink.value};
         renderCard(gallery, createCard(cardToAdd), true);
     }
@@ -126,22 +125,22 @@ const handleNewCardForm = (evt) => {
 
 //Удалить карту
 const removeCard = (evt) => {
-    evt.target.closest(".gallery__card").remove();
+    evt.target.closest('.gallery__card').remove();
 }
 
 //Залайкать карту
 const likeCard = (evt) => {
-    evt.target.classList.toggle("gallery__heart_active");
+    evt.target.classList.toggle('gallery__heart_active');
 }
 
 const spreadCard = (evt) => {
     openPopup(popupPic);
 
-    const link = evt.target.closest(".gallery__card").querySelector(".gallery__pic").getAttribute("src");
-    const name = evt.target.closest(".gallery__card").querySelector(".gallery__text").textContent;
+    const link = evt.target.closest('.gallery__card').querySelector('.gallery__pic').getAttribute('src');
+    const name = evt.target.closest('.gallery__card').querySelector('.gallery__text').textContent;
 
-    picSpreaded.setAttribute("alt", name);
-    picSpreaded.setAttribute("src", link);
+    picSpreaded.setAttribute('alt', name);
+    picSpreaded.setAttribute('src', link);
     textToSpreadedPic.textContent = name;
 
     //Слушатель на закрытие по ESC
@@ -155,15 +154,15 @@ const spreadCard = (evt) => {
 const createCard = (img) => {
     
     //Клонируем
-    const galleryCard = galleryTemplate.querySelector(".gallery__card").cloneNode(true);
-    const galleryPic = galleryCard.querySelector(".gallery__pic");
-    const galleryText = galleryCard.querySelector(".gallery__text");
-    const galleryHeart = galleryCard.querySelector(".gallery__heart");
-    const galleryDelete = galleryCard.querySelector(".gallery__delete");
+    const galleryCard = galleryTemplate.querySelector('.gallery__card').cloneNode(true);
+    const galleryPic = galleryCard.querySelector('.gallery__pic');
+    const galleryText = galleryCard.querySelector('.gallery__text');
+    const galleryHeart = galleryCard.querySelector('.gallery__heart');
+    const galleryDelete = galleryCard.querySelector('.gallery__delete');
 
     //Наполняем
-    galleryPic.setAttribute("alt", img.name);
-    galleryPic.setAttribute("src", img.link);
+    galleryPic.setAttribute('alt', img.name);
+    galleryPic.setAttribute('src', img.link);
     galleryText.textContent = img.name;
 
     //Вешаем слушателей
