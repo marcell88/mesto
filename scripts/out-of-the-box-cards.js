@@ -1,26 +1,22 @@
 const initialCards = [
     {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+      name: 'Лимассол',
+      link: 'https://cyprusbutterfly.com.cy/images/all/860x/24754744d999748632bdc37f2c9c83ab.jpg'
     },
     {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+      name: 'Москва',
+      link: 'https://cdn.mskguru.ru/uploads/flats/4158/kvartry-v-zhk-beregovoj-1534495702.0318_.jpg'
     },
     {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+      name: 'Долгопрудный',
+      link: 'http://photos.wikimapia.org/p/00/03/06/95/89_big.jpg'
     },
     {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+      name: 'Академгородок',
+      link: 'https://img.geliophoto.com/akadem/02_akadem.jpg'
     },
     {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+      name: 'Новокузнецк',
+      link: 'https://wikiway.com/upload/iblock/f9c/Novokuznetsk-s-vysoty.jpg'
     }
   ]; 
