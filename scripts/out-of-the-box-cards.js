@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
     {
       name: 'Лимассол',
       link: 'https://cyprusbutterfly.com.cy/images/all/860x/24754744d999748632bdc37f2c9c83ab.jpg'
