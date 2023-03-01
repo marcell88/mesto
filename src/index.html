@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mesto Россия</title>
-        <link href="./pages/index.css" rel="stylesheet">
     </head>
 
     <body class="body">
@@ -60,7 +59,7 @@
 
             <!--Шапка сайта-->
             <header class="header">
-                <img class="header__logo" src="./images/header-logo.svg" alt="Логотип проекта Mesto Russia">
+                <img class="header__logo" src="<%=require('./images/header-logo.svg')%>" alt="Логотип проекта Mesto Russia">
             </header>
 
             <main class="main">
@@ -68,7 +67,7 @@
                 <!--Профиль-->
                 <section class="profile">
                     <div class="profile__description">
-                        <img class="profile__avatar" src="./images/avatar.jpg" alt="Фото профиля">
+                        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Фото профиля">
                         <div class="profile__text-cont">
                             <div class="profile__name-cont">
                                 <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -102,8 +101,6 @@
             </footer>
 
         </div>
-
-        <script type='module' src="./scripts/index.js"></script>
 
     </body>
 </html>
