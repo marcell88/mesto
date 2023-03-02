@@ -4,15 +4,15 @@
 import '../pages/index.css';
 
 //Изначальные картинки
-import { initialCards } from './out-of-the-box-cards.js';
+import { initialCards } from '../components/out-of-the-box-cards.js';
 
 //Импорт классов
-import { Section } from './Section.js';
-import { Card } from './Card.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { UserInfo } from './UserInfo.js';
-import { FormValidator } from './FormValidator.js'
+import { Section } from '../components/Section.js';
+import { Card } from '../components/Card.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
+import { FormValidator } from '../components/FormValidator.js'
 
 
 

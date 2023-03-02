@@ -18,7 +18,9 @@ export class Popup {
     //Закрытие попапа
     close() {
         this._popupType.classList.remove('popup_opened');
-        this._removeEventListeners();
+        document.removeEventListener('keydown', this._handleEscapePressRef);
+        this._popupType.removeEventListener('click', this._handleSideClickRef);
+        this._closeButton.removeEventListener('click', this._handleCloseButtonRef);
     }
 
     //Получаем тип попапа
@@ -31,12 +33,6 @@ export class Popup {
         document.addEventListener('keydown', this._handleEscapePressRef);
         this._popupType.addEventListener('click', this._handleSideClickRef);
         this._closeButton.addEventListener('click', this._handleCloseButtonRef);
-    }
-
-    _removeEventListeners() {
-        document.removeEventListener('keydown', this._handleEscapePressRef);
-        this._popupType.removeEventListener('click', this._handleSideClickRef);
-        this._closeButton.removeEventListener('click', this._handleCloseButtonRef);
     }
 
     _handleEscapePress(evt) {
