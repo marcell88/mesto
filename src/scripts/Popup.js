@@ -1,45 +1,54 @@
 export class Popup {
 
-    constructor(popupType) {
-        this._popupType = popupType;
+    constructor(selector) {
+        this._popupType = document.querySelector(selector);
         this._closeButton  = this._popupType.querySelector('.popup__close');
         
         this._handleSideClickRef = (evt) => { this._handleSideClick(evt) };
         this._handleEscapePressRef = (evt) => { this._handleEscapePress(evt) };
-        this._handleCloseButtonRef = () => { this.closePopup() };
-
+        this._handleCloseButtonRef = () => { this.close() };
     }
 
     //Открытие попапа
-    openPopup() {
+    open() {
         this._popupType.classList.add('popup_opened');
+        this.setEventListeners();
+    }
+
+    //Закрытие попапа
+    close() {
+        this._popupType.classList.remove('popup_opened');
+        this._removeEventListeners();
+    }
+
+    //Получаем тип попапа
+    getPopupType() {
+        return this._popupType;
+    }
+
+    //Вешаем слушателей
+    setEventListeners() {
         document.addEventListener('keydown', this._handleEscapePressRef);
         this._popupType.addEventListener('click', this._handleSideClickRef);
         this._closeButton.addEventListener('click', this._handleCloseButtonRef);
     }
 
-    //Закрытие попапа
-    closePopup() {
-        this._popupType.classList.remove('popup_opened');
+    _removeEventListeners() {
         document.removeEventListener('keydown', this._handleEscapePressRef);
         this._popupType.removeEventListener('click', this._handleSideClickRef);
         this._closeButton.removeEventListener('click', this._handleCloseButtonRef);
     }
 
-    getPopupType() {
-        return this._popupType;
-    }
-
     _handleEscapePress(evt) {
         if (evt.key === 'Escape') {
-            this.closePopup();
+            this.close();
         }
     }
     
     _handleSideClick(evt) {
         if (evt.target === evt.currentTarget) {
-            this.closePopup();
+            this.close();
         }
     }
-    
+
 }
