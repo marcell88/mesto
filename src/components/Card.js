@@ -39,7 +39,8 @@ export class Card {
 
     //Удалить карту
     _removeCard(evt) {
-        evt.target.closest('.gallery__card').remove();
+        this._element.remove();
+        this._element = null;
     }
 
     //Залайкать карту

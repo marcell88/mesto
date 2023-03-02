@@ -4,7 +4,7 @@
 import '../pages/index.css';
 
 //Изначальные картинки
-import { initialCards } from '../components/out-of-the-box-cards.js';
+import { initialCards } from '../utils/out-of-the-box-cards.js';
 
 //Импорт классов
 import { Section } from '../components/Section.js';
@@ -21,8 +21,9 @@ import { FormValidator } from '../components/FormValidator.js'
 //Открытие попапа для редактирования профиля
 const openEditPopup = () => {
     popupEdit.open();
-    inputName.value = profile.getUserInfo().profileName;
-    inputJob.value = profile.getUserInfo().profileAbout;
+    const {profileName:name, profileAbout:infoAbout} = profile.getUserInfo();
+    inputName.value = name;
+    inputJob.value = infoAbout;
     formProfile.resetValidation();
 }
 
