@@ -11,7 +11,9 @@ export class Section {
     }
 
     renderItems() {
+        console.log(this._initialArray);
         this._initialArray.forEach(item => {
+            console.log(item.name);
             this._renderer(item);
         });
     }

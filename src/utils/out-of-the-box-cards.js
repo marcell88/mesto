@@ -1,22 +1,17 @@
-export const initialCards = [
-  {
-    name: 'Новокузнецк',
-    link: 'https://wikiway.com/upload/iblock/f9c/Novokuznetsk-s-vysoty.jpg'
-  },
-  {
-    name: 'Академгородок',
-    link: 'https://img.geliophoto.com/akadem/02_akadem.jpg'
-  },
-  {
-    name: 'Долгопрудный',
-    link: 'http://photos.wikimapia.org/p/00/03/06/95/89_big.jpg'
-  },
-  {
-    name: 'Москва',
-    link: 'https://cdn.mskguru.ru/uploads/flats/4158/kvartry-v-zhk-beregovoj-1534495702.0318_.jpg'
-  },
-  {
-    name: 'Лимассол',
-    link: 'https://cyprusbutterfly.com.cy/images/all/860x/24754744d999748632bdc37f2c9c83ab.jpg'
-  },
-]; 
+import { Api } from "../components/Api";
+
+export const initialCards = [];
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-61',
+  headers: {
+    authorization: '44fbd263-dcc3-40dc-bdca-15d93dcff4a4',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getInitialCards()
+.then(data => {
+    data.forEach( item => {initialCards.push(item)})
+})
+.catch(err => {console.log(err)});

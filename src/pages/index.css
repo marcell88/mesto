@@ -66,6 +66,7 @@
 @import url(../blocks/gallery/__text-cont/gallery__text-cont.css);
 @import url(../blocks/gallery/__text/gallery__text.css);
 @import url(../blocks/gallery/__delete/gallery__delete.css);
+@import url(../blocks/gallery/__delete/_displayed/gallery___delete_displayed.css);
 
 /* Подвал */
 @import url(../blocks/footer/footer.css);

@@ -13,6 +13,7 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js'
+import { Api } from '../components/Api';
 
 
 
@@ -73,6 +74,15 @@ const objectOfSettings = {
 };
 
 //Подключаем классы
+//API
+const api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-61',
+    headers: {
+      authorization: '44fbd263-dcc3-40dc-bdca-15d93dcff4a4',
+      'Content-Type': 'application/json'
+    }
+});
+
 //Рендеринг карточек в галерее
 const gallerySection = new Section({
     items: initialCards, 
@@ -94,8 +104,10 @@ const formPic = new FormValidator (objectOfSettings, popupAdd.getPopupType().que
 //Профиль пользователя
 const profile = new UserInfo({
     profileNameSelector: '.profile__name',
-    profileAboutSelector: '.profile__about'
+    profileAboutSelector: '.profile__about',
+    profileAvatarSelector: '.profile__avatar' 
 });
+
 
 //Переменные - элементы страницы
 const buttonOpenEditPopup = document.querySelector('.profile__edit-button');
@@ -109,6 +121,14 @@ const inputPicLink = formPic.getFormElement().querySelector('.popup__input_type_
 
 //СКРИПТ=============================================================================================================
 
+//Подгружаем имя - аватар - описание пользователя (текущее)
+api.getUserInfo()
+    .then(data => {
+        profile.setUserInfo({name: data.name, about: data.about});
+        profile.setUserAvatar(data.avatar);
+    })
+    .catch(err => {console.log(err)});
+
 //Задаем начальные карты
 gallerySection.renderItems();
 
@@ -119,3 +139,9 @@ formPic.enableValidation();
 //Слушаем события - открытие
 buttonOpenEditPopup.addEventListener('click', openEditPopup);
 buttonOpenNewCardPopup.addEventListener('click', openAddPopup);
+
+
+
+
+
+
