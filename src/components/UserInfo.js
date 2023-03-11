@@ -18,8 +18,8 @@ export class UserInfo {
     }
 
     setUserAvatar(user) {
-        this._profileAvatar.setAttribute('alt', 'Фото профиля');
-        this._profileAvatar.setAttribute('src', user.avatar);
+        this._user = user;
+        this._profileAvatar.style.backgroundImage = `url('${user.avatar}')`;
     }
 
 }

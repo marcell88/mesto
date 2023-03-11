@@ -1,20 +1,31 @@
 import { Popup } from "./Popup";
 
-export class PopupWithForm extends Popup {
+export class PopupDeleteCard extends Popup {
 
     constructor(selector, handleFormSubmit) {
         super(selector);
+        this._card = null;
+
         this._form = this._popupType.querySelector('.popup__form');
-        this._inputList = Array.from(this._form.querySelectorAll('.popup__input'));
         this._submit = this._popupType.querySelector('.popup__button');
         this._initialButtonText = this._submit.textContent;
 
         this._handleFormSubmit = (evt) => {
             evt.preventDefault();
-            handleFormSubmit( this._getInputValues() );
-     //       this.close();
+            handleFormSubmit( this._card );
+      //      this.close();
         };
-   
+
+        
+    }
+
+    open(card) {
+        super.open();
+        this._card = card;
+    }
+
+    _setCard(card) {
+        this._card = card;
     }
 
     setEventListeners() {
@@ -22,18 +33,11 @@ export class PopupWithForm extends Popup {
         this._form.addEventListener('submit', this._handleFormSubmit);
     }
 
-    _getInputValues() {
-        this._formValues = {};
-        this._inputList.forEach( input => {
-            this._formValues[input.name] = input.value;
-        });
-        return this._formValues;
-    }
-
     close() {
         super.close();
         this._form.removeEventListener('submit', this._handleFormSubmit);
         this._form.reset();
+        this._card = null;
     }
 
     isLoading(str, flag) {

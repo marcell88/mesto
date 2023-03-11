@@ -2,5 +2,60 @@
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    object-fit: cover;
+    transition: 0.2s opacity;    
+
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    position: relative;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 0;
+}
+
+.profile__avatar:hover {
+    cursor: pointer;    
+}
+
+.profile__avatar::before {
+    content: "";
+    width: 120px;
+    height: 120px;
+    background-image: url(../../../images/editava.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26x 26px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+}
+
+.profile__avatar:hover::before {
+    opacity: 1;
+}
+
+.profile__avatar::after {
+    content: "";
+    width: 120px;
+    height: 120px;
+    background-color: rgb(0, 0, 0);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26x 26px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+
+.profile__avatar:hover::after {
+    opacity: 0.8    ;
 }

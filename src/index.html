@@ -20,7 +20,7 @@
                 <!--Профиль-->
                 <section class="profile">
                     <div class="profile__description">
-                        <img class="profile__avatar" src="#" alt="Фото профиля">
+                        <button class="profile__avatar" type="button"></button>
                         <div class="profile__text-cont">
                             <div class="profile__name-cont">
                                 <h1 class="profile__name"></h1>
@@ -103,6 +103,32 @@
                 </div>
             </div>
 
+            <!--Всплывающий попап удалить каарточку-->
+            <div class="popup popup_type_delete">
+                <div class="popup__containter">
+                    <h2 class="popup__title">Вы уверены?</h2>
+                    <button class="popup__close" type="button"></button>
+                    <form class="popup__form" name="delete-card-form" novalidate>          
+                        <button class="popup__button" type="submit">Да</button>
+                    </form>                  
+                </div>
+            </div>
+
+            <!--Всплывающий попап Аватар-->
+            <div class="popup popup_type_ava">
+                <div class="popup__containter">
+                    <h2 class="popup__title">Обновить аватар</h2>
+                    <button class="popup__close" type="button"></button>
+                    <form class="popup__form" name="new-ava-form" novalidate>          
+                        <label class="popup__label">
+                            <input class="popup__input popup__input_type_ava-link" type="url"  name="ava-link" id="input-ava-link" placeholder="Ссылка на картинку" required>
+                            <span class="input-ava-link-error popup__error"></span>
+                        </label>
+                        <button class="popup__button" type="submit">Сохранить</button>
+                    </form>                  
+                </div>
+            </div>
+        
         </div>
 
     </body>
