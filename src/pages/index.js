@@ -3,16 +3,13 @@
 //Для подключения css к webpack
 import '../pages/index.css';
 
-//Изначальные картинки
-import { initialCards } from '../utils/out-of-the-box-cards.js';
-
 //Импорт классов
 import { Section } from '../components/Section.js';
 import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
-import { FormValidator } from '../components/FormValidator.js'
+import { FormValidator } from '../components/FormValidator.js';
 import { Api } from '../components/Api';
 
 
@@ -22,9 +19,9 @@ import { Api } from '../components/Api';
 //Открытие попапа для редактирования профиля
 const openEditPopup = () => {
     popupEdit.open();
-    const {profileName:name, profileAbout:infoAbout} = profile.getUserInfo();
-    inputName.value = name;
-    inputJob.value = infoAbout;
+    const user = profile.getUserInfo();
+    inputName.value = user.name;
+    inputJob.value = user.about;
     formProfile.resetValidation();
 }
 
@@ -35,28 +32,77 @@ const openAddPopup = () => {
 }
 
 const createCard = (img, template) => {
-    const newCard =  new Card (img, template, handleCardClick);
-    return newCard.generateCard();
+    const newCard =  new Card (img, template, handleCardClick, handleLikeCard, handleDeleteCard);
+    const cardElement = newCard.generateCard();
+    if (profile.getUserInfo()._id === newCard.getOwnerId()) {newCard.displayDelete()}
+    newCard.updateColorOfHeart(profile.getUserInfo());
+    return cardElement;
 }
 
 //Обработка отправки формы профилдя
 const handleProfileForm = ( formValues ) => {
-    profile.setUserInfo({
+    api.editProfile({
         name: formValues[inputName.name], 
         about: formValues[inputJob.name]
-    });
+    }).then( data => {
+        profile.setUserInfo({
+            name: data.name, 
+            about: data.about
+        });
+    }).catch(err => {console.log(err)});
 }
 
 //Обработка отправки формы новой каритинки
 const handleNewCardForm = ( formValues ) => {
     const img = { name: formValues[inputPicName.name], link: formValues[inputPicLink.name] };
-    const cardToRender = createCard(img, '.gallery__template');    
-    gallerySection.addItem(cardToRender);
+    api.addNewCard(img)
+        .then(data => {
+            const cardToRender = createCard(data, '.gallery__template');    
+            gallerySection.addItem(cardToRender, false);
+        }).catch(err => {console.log(err)});
 }
 
 //Обработка открытия карточки с каринкой
 const handleCardClick = (name, link) => {
     popupPic.open(name, link);
+}
+
+const handleLikeCard = (card) => {
+    const user = profile.getUserInfo();
+    const likes = card.getLikesArray();
+    const status = likes.includes(user._id);
+    const cardId = card.getId();
+    if (status) {
+        //Есть лайк => удаляем лайк
+        api.deleteLikeToCard(cardId)
+            .then(data => {
+                card.updateCard(data);
+                card.updateColorOfHeart(user);
+
+            })
+            .catch(err => {console.log(err)});
+    } else {
+        //Нет лайка => добавляем лайк
+        api.addLikeToCard(cardId)
+            .then(data => { 
+                card.updateCard(data);
+                card.updateColorOfHeart(user);
+
+            })
+            .catch(err => {console.log(err)});
+    }
+}
+
+const handleDeleteCard = (card) => {
+    const user = profile.getUserInfo();
+    const cardId = card.getId();
+
+    if (user._id === card.getOwnerId()) {
+        api.deleteCard(cardId)
+        .then( data => {card.deleteCard()})
+        .catch(err => {console.log(err)});
+    }
+
 }
 
 
@@ -85,7 +131,6 @@ const api = new Api({
 
 //Рендеринг карточек в галерее
 const gallerySection = new Section({
-    items: initialCards, 
     renderer: (img) => {
         const newCard = createCard(img, '.gallery__template');
         gallerySection.addItem(newCard);
@@ -119,18 +164,20 @@ const inputPicLink = formPic.getFormElement().querySelector('.popup__input_type_
 
 
 
-//СКРИПТ=============================================================================================================
+//СКРИПТ======================================s=======================================================================
 
 //Подгружаем имя - аватар - описание пользователя (текущее)
 api.getUserInfo()
     .then(data => {
-        profile.setUserInfo({name: data.name, about: data.about});
-        profile.setUserAvatar(data.avatar);
+        profile.setUserInfo(data);
+        profile.setUserAvatar(data);
     })
     .catch(err => {console.log(err)});
 
-//Задаем начальные карты
-gallerySection.renderItems();
+//Подгружаем начальные карточки
+api.getInitialCards()
+    .then((data) => {gallerySection.renderItems(data)})
+    .catch(err => {console.log(err)});
 
 //Включаем валидаторы форм
 formProfile.enableValidation();

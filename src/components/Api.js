@@ -34,4 +34,85 @@ export class Api {
         });
     }
 
+    editProfile({name, about}) {
+        return fetch(this._baseUrl + '/users/me', {
+            method: 'PATCH',
+            headers: {
+                authorization: this._token,
+                'Content-Type': this._contentType
+            },
+            body: JSON.stringify({
+                name: name,
+                about: about
+            })
+        })
+        .then( res => {
+            return res.ok
+                ? res.json()
+                : Promise.reject(`>>>> Ошибка - изменение профиля: ${res.status}`);
+        });
+    }
+
+    addNewCard({name, link}) {
+        return fetch(this._baseUrl + '/cards', {
+            method: 'POST',
+            headers: {
+                authorization: this._token,
+                'Content-Type': this._contentType
+            },
+            body: JSON.stringify({
+                name: name,
+                link: link
+            })
+        })
+        .then( res => {
+            return res.ok
+                ? res.json()
+                : Promise.reject(`>>>> Ошибка - добавление карточки: ${res.status}`);
+        });
+    }
+
+    deleteCard(cardId) {
+        return fetch(this._baseUrl + '/cards/' + cardId, {
+            method: 'DELETE',
+            headers: {
+                authorization: this._token,
+            }
+        })
+        .then( res => {
+            return res.ok
+                ? res.json()
+                : Promise.reject(`>>>> Ошибка - удаление карточки: ${res.status}`);
+        });
+    }
+
+    addLikeToCard(cardId) {
+        return fetch(this._baseUrl + '/cards/' + cardId + '/likes', {
+            method: 'PUT',
+            headers: {
+                authorization: this._token,
+            }
+        })
+        .then( res => {
+            return res.ok
+                ? res.json()
+                : Promise.reject(`>>>> Ошибка - добавление лайка: ${res.status}`);
+        });
+    }
+
+    deleteLikeToCard(cardId) {
+        return fetch(this._baseUrl + '/cards/' + cardId + '/likes', {
+            method: 'DELETE',
+            headers: {
+                authorization: this._token,
+            }
+        })
+        .then( res => {
+            return res.ok
+                ? res.json()
+                : Promise.reject(`>>>> Ошибка - удаление лайка: ${res.status}`);
+        });
+    }
+
+
 }
