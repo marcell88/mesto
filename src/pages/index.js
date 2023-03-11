@@ -32,34 +32,41 @@ const openAddPopup = () => {
 }
 
 const createCard = (img, template) => {
-    const newCard =  new Card (img, template, handleCardClick, handleLikeCard, handleDeleteCard);
+    const oberver = profile.getUserInfo();
+    const newCard =  new Card (img, oberver, template, handleCardClick, handleLikeCard, handleDeleteCard);
     const cardElement = newCard.generateCard();
-    if (profile.getUserInfo()._id === newCard.getOwnerId()) {newCard.displayDelete()}
-    newCard.updateColorOfHeart(profile.getUserInfo());
     return cardElement;
 }
 
 //Обработка отправки формы профилдя
 const handleProfileForm = ( formValues ) => {
+    popupEdit.isLoading(true);
     api.editProfile({
         name: formValues[inputName.name], 
         about: formValues[inputJob.name]
-    }).then( data => {
+    })
+    .then( data => {
         profile.setUserInfo({
             name: data.name, 
             about: data.about
         });
-    }).catch(err => {console.log(err)});
+    })
+    .catch(err => {console.log(err)})
+    .finally( () => {popupEdit.isLoading(false)} );
+
 }
 
 //Обработка отправки формы новой каритинки
 const handleNewCardForm = ( formValues ) => {
     const img = { name: formValues[inputPicName.name], link: formValues[inputPicLink.name] };
+    popupAdd.isLoading(true);
     api.addNewCard(img)
         .then(data => {
             const cardToRender = createCard(data, '.gallery__template');    
             gallerySection.addItem(cardToRender, false);
-        }).catch(err => {console.log(err)});
+        })
+        .catch(err => {console.log(err)})
+        .finally( () => {popupAdd.isLoading(false)} );
 }
 
 //Обработка открытия карточки с каринкой
@@ -71,38 +78,28 @@ const handleLikeCard = (card) => {
     const user = profile.getUserInfo();
     const likes = card.getLikesArray();
     const status = likes.includes(user._id);
-    const cardId = card.getId();
+    const cardId = card.getCardId();
     if (status) {
         //Есть лайк => удаляем лайк
         api.deleteLikeToCard(cardId)
-            .then(data => {
-                card.updateCard(data);
-                card.updateColorOfHeart(user);
-
-            })
+            .then(data => { card.updateCard(data) })
             .catch(err => {console.log(err)});
     } else {
         //Нет лайка => добавляем лайк
         api.addLikeToCard(cardId)
-            .then(data => { 
-                card.updateCard(data);
-                card.updateColorOfHeart(user);
-
-            })
+            .then(data => { card.updateCard(data) })
             .catch(err => {console.log(err)});
     }
 }
 
 const handleDeleteCard = (card) => {
     const user = profile.getUserInfo();
-    const cardId = card.getId();
-
+    const cardId = card.getCardId();
     if (user._id === card.getOwnerId()) {
         api.deleteCard(cardId)
-        .then( data => {card.deleteCard()})
+        .then( data => {card.deleteCard(cardId)})
         .catch(err => {console.log(err)});
     }
-
 }
 
 
@@ -153,7 +150,6 @@ const profile = new UserInfo({
     profileAvatarSelector: '.profile__avatar' 
 });
 
-
 //Переменные - элементы страницы
 const buttonOpenEditPopup = document.querySelector('.profile__edit-button');
 const buttonOpenNewCardPopup = document.querySelector('.profile__add-button');
@@ -164,19 +160,20 @@ const inputPicLink = formPic.getFormElement().querySelector('.popup__input_type_
 
 
 
-//СКРИПТ======================================s=======================================================================
+//СКРИПТ==============================================================================================================
 
 //Подгружаем имя - аватар - описание пользователя (текущее)
 api.getUserInfo()
     .then(data => {
         profile.setUserInfo(data);
         profile.setUserAvatar(data);
-    })
-    .catch(err => {console.log(err)});
 
-//Подгружаем начальные карточки
-api.getInitialCards()
-    .then((data) => {gallerySection.renderItems(data)})
+        //Подгружаем начальные карточки - после подгрузки данных о пользователе (иначе баг при F5)
+        api.getInitialCards()
+        .then((data) => {gallerySection.renderItems(data)})
+        .catch(err => {console.log(err)});
+
+    })
     .catch(err => {console.log(err)});
 
 //Включаем валидаторы форм
