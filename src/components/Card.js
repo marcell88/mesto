@@ -13,10 +13,8 @@ export class Card {
 
     generateCard() {
         this._element = this._getTemplate();
-
         this._deleteButton = this._element.querySelector('.gallery__delete');
         this._deleteButton.disabled = true;
-
         this._heartButton = this._element.querySelector('.gallery__heart');
         this._likeElement = this._element.querySelector('.gallery__heart-likes');
         this._picture = this._element.querySelector('.gallery__pic');

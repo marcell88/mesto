@@ -1,4 +1,3 @@
-import { Popup } from "./Popup";
 import { PopupWithForm } from "./PopupWithForm";
 
 export class PopupWithConfirmation extends PopupWithForm {

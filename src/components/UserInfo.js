@@ -12,14 +12,18 @@ export class UserInfo {
     }
 
     setUserInfo(user) {
-        this._user = user;
-        this._profileName.textContent = user.name;
-        this._profileAbout.textContent = user.about;
+        if (user.name && user.about) {
+            this._user = user;
+            this._profileName.textContent = user.name;
+            this._profileAbout.textContent = user.about;    
+        }
     }
 
     setUserAvatar(user) {
-        this._user = user;
-        this._profileAvatar.style.backgroundImage = `url('${user.avatar}')`;
+        if (user.avatar) {
+            this._user = user;
+            this._profileAvatar.style.backgroundImage = `url('${user.avatar}')`;    
+        }
     }
 
 }

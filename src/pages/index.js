@@ -13,30 +13,25 @@ import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Api } from '../components/Api';
 
-
-
 //ФУНКЦИИ====================================================================================================
 
-//Открытие попапа для редактирования профиля
 const openEditPopup = () => {
-    popupEdit.open();
+    popupEditProfile.open();
     const user = profile.getUserInfo();
     inputName.value = user.name;
     inputJob.value = user.about;
-    formProfile.resetValidation();
+    validatorEditProfile.resetValidation();
 }
 
-//Открытие попапа для добавления карточки
 const openAddPopup = () => {
-    popupAdd.open();
-    formPic.resetValidation();
+    popupAddCard.open();
+    validatorAddCard.resetValidation();
 }
 
 const openAvaPopup = () => {
-    popupAva.open();
+    popupUpdateAvatar.open();
     const user = profile.getUserInfo();
-    inputAvaLink.value = user.avatar;
-    formAva.resetValidation();
+    validatorUpdateAvatar.resetValidation();
 }
 
 const createCard = (img, template) => {
@@ -46,53 +41,49 @@ const createCard = (img, template) => {
     return cardElement;
 }
 
-//Обработка отправки формы профилдя
 const handleProfileForm = ( formValues ) => {
-    popupEdit.isLoading('Сохранение...');
+    popupEditProfile.isLoading('Сохранение...');
     api.editProfile({
         name: formValues[inputName.name], 
         about: formValues[inputJob.name]
     })
     .then( data => {
         profile.setUserInfo(data);
-        popupEdit.close();
+        popupEditProfile.close();
     })
     .catch(err => {console.log(err)})
-    .finally( () => {popupEdit.isLoading()} );
+    .finally( () => {popupEditProfile.isLoading()} );
 
 }
 
-//////////////////////
 const handleNewAvaForm = ( formValues ) => {
-    popupAva.isLoading('Сохранение...');
+    popupUpdateAvatar.isLoading('Сохранение...');
     api.editAvatar({
         avatar: formValues[inputAvaLink.name]
     })
     .then( data => {
         profile.setUserAvatar(data);
-        popupAva.close();
+        popupUpdateAvatar.close();
     })
     .catch(err => {console.log(err)})
-    .finally( () => {popupAva.isLoading()} );
+    .finally( () => {popupUpdateAvatar.isLoading()} );
 }
 
-//Обработка отправки формы новой каритинки
 const handleNewCardForm = ( formValues ) => {
     const img = { name: formValues[inputPicName.name], link: formValues[inputPicLink.name] };
-    popupAdd.isLoading('Создание...');
+    popupAddCard.isLoading('Создание...');
     api.addNewCard(img)
         .then(data => {
             const cardToRender = createCard(data, '.gallery__template');    
             gallerySection.addItem(cardToRender, false);
-            popupAdd.close();
+            popupAddCard.close();
         })
         .catch(err => {console.log(err)})
-        .finally( () => {popupAdd.isLoading()} );
+        .finally( () => {popupAddCard.isLoading()} );
 }
 
-//Обработка открытия карточки с каринкой
 const handleCardClick = (name, link) => {
-    popupPic.open(name, link);
+    popupSpreadPic.open(name, link);
 }
 
 const handleLikeCard = (card) => {
@@ -101,12 +92,10 @@ const handleLikeCard = (card) => {
     const status = likes.includes(user._id);
     const cardId = card.getCardId();
     if (status) {
-        //Есть лайк => удаляем лайк
         api.deleteLikeToCard(cardId)
             .then(data => { card.updateCard(data) })
             .catch(err => {console.log(err)});
     } else {
-        //Нет лайка => добавляем лайк
         api.addLikeToCard(cardId)
             .then(data => { card.updateCard(data) })
             .catch(err => {console.log(err)});
@@ -114,28 +103,28 @@ const handleLikeCard = (card) => {
 }
 
 const handleDeleteCard = (card) => {
-    popupDelete.open(card);
+    popupConfirmDelete.open(card);
 }
 
 const handleApproveDelete = (card) => {
-    popupDelete.isLoading('Удаление...');
+    popupConfirmDelete.isLoading('Удаление...');
     const user = profile.getUserInfo();
     const cardId = card.getCardId();
     if (user._id === card.getOwnerId()) {
         api.deleteCard(cardId)
         .then( data => {
             card.deleteCard(cardId);
-            popupDelete.close();
+            popupConfirmDelete.close();
         })
         .catch(err => {console.log(err)})
-        .finally( () => {popupDelete.isLoading()} );
+        .finally( () => {popupConfirmDelete.isLoading()} );
     }
 }
 
 //ПЕРМЕННЫЕ=========================================================================================================
 
 //Объекты
-const objectOfSettings = {
+const validationConfig = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
@@ -163,17 +152,16 @@ const gallerySection = new Section({
 }, '.gallery');
 
 //Попапы
-const popupEdit = new PopupWithForm('.popup_type_edit', handleProfileForm );
-const popupAdd = new PopupWithForm('.popup_type_add', handleNewCardForm );
-const popupAva = new PopupWithForm('.popup_type_ava', handleNewAvaForm );
-const popupPic = new PopupWithImage('.popup_type_pic');
-const popupDelete = new PopupWithConfirmation('.popup_type_delete', handleApproveDelete );
+const popupEditProfile = new PopupWithForm('.popup_type_edit', handleProfileForm );
+const popupAddCard = new PopupWithForm('.popup_type_add', handleNewCardForm );
+const popupUpdateAvatar = new PopupWithForm('.popup_type_ava', handleNewAvaForm );
+const popupSpreadPic = new PopupWithImage('.popup_type_pic');
+const popupConfirmDelete = new PopupWithConfirmation('.popup_type_delete', handleApproveDelete );
 
 //Валидаторы форм
-const formProfile = new FormValidator (objectOfSettings, popupEdit.getPopupType().querySelector('.popup__form'));
-const formPic = new FormValidator (objectOfSettings, popupAdd.getPopupType().querySelector('.popup__form'));
-const formAva = new FormValidator (objectOfSettings, popupAva.getPopupType().querySelector('.popup__form'));
-
+const validatorEditProfile = new FormValidator (validationConfig, popupEditProfile.getPopupType().querySelector('.popup__form'));
+const validatorAddCard = new FormValidator (validationConfig, popupAddCard.getPopupType().querySelector('.popup__form'));
+const validatorUpdateAvatar = new FormValidator (validationConfig, popupUpdateAvatar.getPopupType().querySelector('.popup__form'));
 
 //Профиль пользователя
 const profile = new UserInfo({
@@ -186,37 +174,29 @@ const profile = new UserInfo({
 const buttonOpenEditPopup = document.querySelector('.profile__edit-button');
 const buttonOpenNewCardPopup = document.querySelector('.profile__add-button');
 const buttonOpenNewAvaPopup = document.querySelector('.profile__avatar');
-const inputName = formProfile.getFormElement().querySelector('.popup__input_type_name');
-const inputJob = formProfile.getFormElement().querySelector('.popup__input_type_job');
-const inputPicName = formPic.getFormElement().querySelector('.popup__input_type_pic-name');
-const inputPicLink = formPic.getFormElement().querySelector('.popup__input_type_pic-link');
-const inputAvaLink = formAva.getFormElement().querySelector('.popup__input_type_ava-link');
-
-
-
+const inputName = validatorEditProfile.getFormElement().querySelector('.popup__input_type_name');
+const inputJob = validatorEditProfile.getFormElement().querySelector('.popup__input_type_job');
+const inputPicName = validatorAddCard.getFormElement().querySelector('.popup__input_type_pic-name');
+const inputPicLink = validatorAddCard.getFormElement().querySelector('.popup__input_type_pic-link');
+const inputAvaLink = validatorUpdateAvatar.getFormElement().querySelector('.popup__input_type_ava-link');
 
 //СКРИПТ==============================================================================================================
-
 //Обновляю профиль -> пропадают знаки удаления
-
 //Подгружаем имя - аватар - описание пользователя (текущее)
 api.getUserInfo()
     .then(data => {
         profile.setUserInfo(data);
         profile.setUserAvatar(data);
-
-        //Подгружаем начальные карточки - после подгрузки данных о пользователе (иначе баг при F5)
         api.getInitialCards()
         .then((data) => {gallerySection.renderItems(data)})
         .catch(err => {console.log(err)});
-
     })
     .catch(err => {console.log(err)});
 
 //Включаем валидаторы форм
-formProfile.enableValidation();
-formPic.enableValidation();
-formAva.enableValidation();
+validatorEditProfile.enableValidation();
+validatorAddCard.enableValidation();
+validatorUpdateAvatar.enableValidation();
 
 //Слушаем события - открытие
 buttonOpenEditPopup.addEventListener('click', openEditPopup);

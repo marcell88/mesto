@@ -6,6 +6,12 @@ export class Api {
         this._contentType = options.headers['Content-Type'];
     }
 
+    _statusCheck(res, str = '') {
+        return res.ok
+        ? res.json()
+        : Promise.reject(`>>>> Ошибка - ${str}: ${res.status}`);
+    }
+
     getUserInfo() {
         return fetch(this._baseUrl + '/users/me', {
             method: 'GET',
@@ -13,11 +19,7 @@ export class Api {
                 authorization: this._token
             }
         })
-        .then( res => {
-            return res.ok
-                ? res.json()
-                : Promise.reject(`>>>> Ошибка - инфо о пользователе: ${res.status}`);
-        });
+        .then( res => this._statusCheck(res, 'инфо о пользователе'));
     }
 
     getInitialCards() {
@@ -27,11 +29,7 @@ export class Api {
                 authorization: this._token
             }
         })
-        .then( res => {
-            return res.ok
-                ? res.json()
-                : Promise.reject(`>>>> Ошибка - предустановленные картинки: ${res.status}`);
-        });
+        .then( res => this._statusCheck(res, 'предустановленные картинки'));
     }
 
     editProfile({name, about}) {
@@ -46,11 +44,7 @@ export class Api {
                 about: about
             })
         })
-        .then( res => {
-            return res.ok
-                ? res.json()
-                : Promise.reject(`>>>> Ошибка - изменение профиля: ${res.status}`);
-        });
+        .then( res => this._statusCheck(res, 'изменение профиля'));
     }
 
     editAvatar({avatar}) {
@@ -64,11 +58,7 @@ export class Api {
                 avatar: avatar
             })
         })
-        .then( res => {
-            return res.ok
-                ? res.json()
-                : Promise.reject(`>>>> Ошибка - изменение аватара: ${res.status}`);
-        });
+        .then( res => this._statusCheck(res, 'изменение аватара'));
     }
 
     addNewCard({name, link}) {
@@ -83,11 +73,7 @@ export class Api {
                 link: link
             })
         })
-        .then( res => {
-            return res.ok
-                ? res.json()
-                : Promise.reject(`>>>> Ошибка - добавление карточки: ${res.status}`);
-        });
+        .then( res => this._statusCheck(res, 'добавление карточки'));
     }
 
     deleteCard(cardId) {
@@ -97,11 +83,7 @@ export class Api {
                 authorization: this._token,
             }
         })
-        .then( res => {
-            return res.ok
-                ? res.json()
-                : Promise.reject(`>>>> Ошибка - удаление карточки: ${res.status}`);
-        });
+        .then( res => this._statusCheck(res, 'удаление карточки'));
     }
 
     addLikeToCard(cardId) {
@@ -111,11 +93,7 @@ export class Api {
                 authorization: this._token,
             }
         })
-        .then( res => {
-            return res.ok
-                ? res.json()
-                : Promise.reject(`>>>> Ошибка - добавление лайка: ${res.status}`);
-        });
+        .then( res => this._statusCheck(res, 'добавление лайка'));
     }
 
     deleteLikeToCard(cardId) {
@@ -125,12 +103,6 @@ export class Api {
                 authorization: this._token,
             }
         })
-        .then( res => {
-            return res.ok
-                ? res.json()
-                : Promise.reject(`>>>> Ошибка - удаление лайка: ${res.status}`);
-        });
+        .then( res => this._statusCheck(res, 'удаление лайка'));
     }
-
-
 }
