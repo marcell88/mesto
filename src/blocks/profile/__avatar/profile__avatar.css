@@ -2,7 +2,7 @@
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    transition: opacity 0.2s;    
+    transition: opacity 0.2s;
 
     margin: 0;
     padding: 0;
@@ -27,7 +27,7 @@
     background-image: url(../../../images/editava.png);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 26x 26px;
+    background-size: 26px 26px;
     opacity: 0;
     transition: opacity 0.2s;
     position:absolute;
@@ -47,7 +47,7 @@
     background-color: rgb(0, 0, 0);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 26x 26px;
+    background-size: 26px 26px;
     opacity: 0;
     transition: opacity 0.5s;
     position:absolute;
