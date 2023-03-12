@@ -8,7 +8,7 @@ import { Section } from '../components/Section.js';
 import { Card } from '../components/Card.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
-import { PopupDeleteCard } from '../components/PopupDeleteCard';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation';
 import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Api } from '../components/Api';
@@ -48,7 +48,7 @@ const createCard = (img, template) => {
 
 //Обработка отправки формы профилдя
 const handleProfileForm = ( formValues ) => {
-    popupEdit.isLoading('Сохранение...', true);
+    popupEdit.isLoading('Сохранение...');
     api.editProfile({
         name: formValues[inputName.name], 
         about: formValues[inputJob.name]
@@ -58,13 +58,13 @@ const handleProfileForm = ( formValues ) => {
         popupEdit.close();
     })
     .catch(err => {console.log(err)})
-    .finally( () => {popupEdit.isLoading('Сохранение...', false)} );
+    .finally( () => {popupEdit.isLoading()} );
 
 }
 
 //////////////////////
 const handleNewAvaForm = ( formValues ) => {
-    popupAva.isLoading('Сохранение...', true);
+    popupAva.isLoading('Сохранение...');
     api.editAvatar({
         avatar: formValues[inputAvaLink.name]
     })
@@ -73,13 +73,13 @@ const handleNewAvaForm = ( formValues ) => {
         popupAva.close();
     })
     .catch(err => {console.log(err)})
-    .finally( () => {popupAva.isLoading('Сохранение...', false)} );
+    .finally( () => {popupAva.isLoading()} );
 }
 
 //Обработка отправки формы новой каритинки
 const handleNewCardForm = ( formValues ) => {
     const img = { name: formValues[inputPicName.name], link: formValues[inputPicLink.name] };
-    popupAdd.isLoading('Создание...', true);
+    popupAdd.isLoading('Создание...');
     api.addNewCard(img)
         .then(data => {
             const cardToRender = createCard(data, '.gallery__template');    
@@ -87,7 +87,7 @@ const handleNewCardForm = ( formValues ) => {
             popupAdd.close();
         })
         .catch(err => {console.log(err)})
-        .finally( () => {popupAdd.isLoading('Создание...', false)} );
+        .finally( () => {popupAdd.isLoading()} );
 }
 
 //Обработка открытия карточки с каринкой
@@ -118,7 +118,7 @@ const handleDeleteCard = (card) => {
 }
 
 const handleApproveDelete = (card) => {
-    popupDelete.isLoading('Удаление...', true);
+    popupDelete.isLoading('Удаление...');
     const user = profile.getUserInfo();
     const cardId = card.getCardId();
     if (user._id === card.getOwnerId()) {
@@ -128,7 +128,7 @@ const handleApproveDelete = (card) => {
             popupDelete.close();
         })
         .catch(err => {console.log(err)})
-        .finally( () => {popupDelete.isLoading('Создание...', false)} );
+        .finally( () => {popupDelete.isLoading()} );
     }
 }
 
@@ -167,7 +167,7 @@ const popupEdit = new PopupWithForm('.popup_type_edit', handleProfileForm );
 const popupAdd = new PopupWithForm('.popup_type_add', handleNewCardForm );
 const popupAva = new PopupWithForm('.popup_type_ava', handleNewAvaForm );
 const popupPic = new PopupWithImage('.popup_type_pic');
-const popupDelete = new PopupDeleteCard('.popup_type_delete', handleApproveDelete );
+const popupDelete = new PopupWithConfirmation('.popup_type_delete', handleApproveDelete );
 
 //Валидаторы форм
 const formProfile = new FormValidator (objectOfSettings, popupEdit.getPopupType().querySelector('.popup__form'));

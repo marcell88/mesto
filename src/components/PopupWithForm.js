@@ -12,7 +12,6 @@ export class PopupWithForm extends Popup {
         this._handleFormSubmit = (evt) => {
             evt.preventDefault();
             handleFormSubmit( this._getInputValues() );
-     //       this.close();
         };
    
     }
@@ -36,8 +35,8 @@ export class PopupWithForm extends Popup {
         this._form.reset();
     }
 
-    isLoading(str, flag) {
-        flag ? this._submit.textContent = str : this._submit.textContent = this._initialButtonText;
+    isLoading(str) {
+        str ? this._submit.textContent = str : this._submit.textContent = this._initialButtonText
     }
 
 }
